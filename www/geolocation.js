@@ -30,9 +30,10 @@ var timers = {};   // list of timers in use
 // Returns default params, overrides if provided with values
 function parseParameters(options) {
     var opt = {
-        maximumAge: 0,
-        enableHighAccuracy: false,
-        timeout: Infinity
+    	type:					"",
+        enableHighAccuracy: 	false,
+        maximumAge: 			0,
+        timeout: 				Infinity
     };
 
     if (options) {
@@ -48,6 +49,9 @@ function parseParameters(options) {
             } else {
                 opt.timeout = options.timeout;
             }
+        }
+        if (options.type !== undefined && options.type !== "") {
+        	opt.type = options.type;
         }
     }
 
@@ -139,7 +143,7 @@ var geolocation = {
                 // always truthy before we call into native
                 timeoutTimer.timer = true;
             }
-            exec(win, fail, "Geolocation", "getLocation", [options.enableHighAccuracy, options.maximumAge]);
+            exec(win, fail, "Geolocation", "getLocation", [options.enableHighAccuracy, options.maximumAge, options.timeout, options.type]);
         }
         return timeoutTimer;
     },
